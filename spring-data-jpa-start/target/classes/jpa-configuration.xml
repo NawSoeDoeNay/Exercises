@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="
+           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+
+           http://www.springframework.org/schema/data/jpa
+           http://www.springframework.org/schema/data/jpa/spring-jpa-1.11.xsd
+
+           http://www.springframework.org/schema/jdbc
+           http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd
+
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+           
+		<context:component-scan base-package="com.startup.demo.spring" />
+		
+		<jdbc:embedded-database id="dataSource" type="HSQL" />
+		
+		<bean id="entityManagerFactory"
+			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+			p:dataSource-ref="dataSource" p:packagesToScan="com.startup.demo.spring.entity"
+			p:jpaVendorAdapter-ref="jpaVendorAdapter"
+			p:jpaPropertyMap-ref ="jpaPropertiesMap"/>
+		
+		<bean id="jpaVendorAdapter"
+			class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+	
+		<util:map id="jpaPropertiesMap">
+			<entry key="hibernate.hbm2ddl.auto" value="create"/>
+			<entry key="hibernate.show_sql" value="true"/>
+			<entry key="hibernate.format_sql" value="true"/>
+		</util:map>
+		
+		<bean id="transactionManager"
+			class="org.springframework.orm.jpa.JpaTransactionManager"
+			p:entityManagerFactory-ref="entityManagerFactory"/>	
+			
+		<tx:annotation-driven/>	
+		<jpa:repositories base-package="com.startup.demo.spring.repo"></jpa:repositories>
+		
+		
+
+</beans>
