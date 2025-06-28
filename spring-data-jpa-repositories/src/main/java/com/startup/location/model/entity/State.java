@@ -31,15 +31,15 @@ public class State implements Serializable {
 	private Type type;
 	private String region;
 	private String capital;
-	private int porpulation;
+	private int population;
 
-	public State(String name, Type type, String region, String capital, int porpulation) {
+	public State(String name, Type type, String region, String capital, int population) {
 		super();
 		this.name = name;
 		this.type = type;
 		this.region = region;
 		this.capital = capital;
-		this.porpulation = porpulation;
+		this.population = population;
 	}
 
 	public enum Type {
